@@ -1,0 +1,210 @@
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname IOU1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$MPuj$QLDtUrgbRReLnKxLKxwze1
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+clock timezone EET 2 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+no ip icmp rate-limit unreachable
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip domain name dsf
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+username u1 secret 5 $1$2nkL$1xgca7JjW1mYOktrsrvJD.
+username u2 secret 5 $1$6CfT$m1ZZ75XhjPxy.dE5ElvhI/
+username admin1 secret 5 $1$hBkn$hOSLQ160EPehA17.tWW/G/
+!
+redundancy
+!
+!
+ip tcp synwait-time 5
+ip ssh maxstartups 5
+ip ssh version 2
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface Loopback1
+ ip address 100.100.100.100 255.255.255.255
+!
+interface Loopback10
+ ip address 10.10.10.10 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 192.168.122.10 255.255.255.0
+!
+interface Ethernet0/1
+ no ip address
+ shutdown
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+interface Serial2/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial2/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial2/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial2/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+!
+router eigrp 100
+ network 192.168.122.0
+!
+router ospf 1
+ network 0.0.0.0 255.255.255.255 area 0
+ distance 100
+!
+router ospf 100
+ network 0.0.0.0 255.255.255.255 area 0
+!
+router rip
+ version 2
+ network 10.0.0.0
+ network 192.168.122.0
+ distance 100
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+access-list 1 permit any
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login local
+ transport input telnet ssh
+!
+!
+end
