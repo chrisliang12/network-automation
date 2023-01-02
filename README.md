@@ -1,6 +1,6 @@
 # Network Automation Project
 ## Network Topology
-- In this project, I use the following topology in GNS3
+- In this project, the following topology is used in GNS3
 
 <div align="center">
 <img src="./img/topology.jpg" width="600" align=center>
